@@ -14,7 +14,7 @@ import time
 import json
 import random
 
-
+from starter.utils.fs import *
 from starter.utils.afs_safe_logger import Logger
 
 import gflags
@@ -22,35 +22,15 @@ import gflags
 FLAGS = gflags.FLAGS
 
 
-def fs_log_dir():
-    return os.path.join(FLAGS.log_path, FLAGS.experiment_name)
-
-
-def fs_log_path():
-    return os.path.join(fs_log_dir(), FLAGS.experiment_name + '.log')
-
-
-def fs_checkpoint_path():
-    return os.path.join(fs_log_dir(), FLAGS.experiment_name + '.pt')
-
-
-def fs_best_checkpoint_path():
-    return os.path.join(fs_log_dir(), FLAGS.experiment_name + '.pt-best')
-
-
-def fs_flags_json_path():
-    return os.path.join(fs_log_dir(), FLAGS.experiment_name + '.json')
-
-
 def run():
-    if not os.path.exists(fs_log_dir()):
-        os.mkdir(fs_log_dir())
+    if not os.path.exists(fs_log_dir(FLAGS)):
+        os.mkdir(fs_log_dir(FLAGS))
 
-    logger = Logger(fs_log_path())
+    logger = Logger(fs_log_path(FLAGS))
 
     flags_json = json.dumps(FLAGS.FlagValuesDict(), indent=4, sort_keys=True)
     logger.Log("Flag Values:\n" + flags_json)
-    with open(fs_flags_json_path(), 'w') as f:
+    with open(fs_flags_json_path(FLAGS), 'w') as f:
         f.write(flags_json)
 
     model = None
