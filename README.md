@@ -1,6 +1,6 @@
 TODO
 
-- [ ] MNIST Demo
-- [ ] test for loading optimizer/model
+- [x] MNIST Demo
+- [x] test for loading optimizer/model
 - [ ] visualization in jupyter
 - [ ] latex writing example
